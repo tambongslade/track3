@@ -7,18 +7,21 @@ interface SidebarProps {
 
 const Sidebar = ({ activeSection, onSectionChange }: SidebarProps) => {
   const menuItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: '📊' },
-    { id: 'analytics', label: 'Analytics', icon: '📈' },
-    { id: 'users', label: 'Users', icon: '👥' },
-    { id: 'products', label: 'Products', icon: '📦' },
-    { id: 'orders', label: 'Orders', icon: '🛒' },
+    { id: 'dashboard', label: 'Analytics Dashboard', icon: '📊' },
+    { id: 'collections', label: 'Blood Collections', icon: '🩸' },
+    { id: 'usage', label: 'Blood Usage', icon: '💉' },
+    { id: 'inventory', label: 'Blood Inventory', icon: '🏥' },
+    { id: 'low-stock', label: 'Low Stock Alerts', icon: '⚠️' },
+    { id: 'donors', label: 'Donor Management', icon: '👥' },
     { id: 'settings', label: 'Settings', icon: '⚙️' },
   ]
 
   return (
     <aside className="sidebar">
       <div className="sidebar-header">
-        <h2>Dashboard</h2>
+        <div className="logo">🩸</div>
+        <h2>Blood Bank</h2>
+        <p>Management System</p>
       </div>
       
       <nav className="sidebar-nav">

@@ -1,22 +1,50 @@
-import { useState } from 'react'
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import './App.css'
-import Sidebar from './components/Sidebar'
-import Header from './components/Header'
-import Dashboard from './components/Dashboard'
+import Login from './components/Login'
+import Signup from './components/Signup'
+import DashboardLayout from './components/DashboardLayout'
+import ProtectedRoute from './components/ProtectedRoute'
+import PublicRoute from './components/PublicRoute'
 
 function App() {
-  const [activeSection, setActiveSection] = useState('dashboard')
+  const navigate = useNavigate()
 
   return (
-    <div className="app">
-      <Sidebar activeSection={activeSection} onSectionChange={setActiveSection} />
-      <div className="main-content">
-        <Header />
-        <main className="content">
-          <Dashboard activeSection={activeSection} />
-        </main>
-      </div>
-    </div>
+    <Routes>
+      {/* Public routes - only accessible when not authenticated */}
+      <Route 
+        path="/login" 
+        element={
+          <PublicRoute>
+            <Login onSwitchToSignup={() => navigate('/signup')} />
+          </PublicRoute>
+        } 
+      />
+      <Route 
+        path="/signup" 
+        element={
+          <PublicRoute>
+            <Signup onSwitchToLogin={() => navigate('/login')} />
+          </PublicRoute>
+        } 
+      />
+
+      {/* Protected routes - only accessible when authenticated */}
+      <Route 
+        path="/dashboard" 
+        element={
+          <ProtectedRoute>
+            <DashboardLayout />
+          </ProtectedRoute>
+        } 
+      />
+
+      {/* Redirect root to dashboard */}
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
+
+      {/* Catch all route - redirect to dashboard */}
+      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+    </Routes>
   )
 }
 
